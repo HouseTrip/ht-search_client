@@ -1,5 +1,9 @@
 # Ht::SearchClient
 
+[![Travis
+CI](https://travis-ci.org/HouseTrip/ht-search_client.svg)](http://travis-ci.org/HouseTrip/ht-search_client) [![Dependency
+Status](https://gemnasium.com/HouseTrip/ht-search_client.svg)](https://gemnasium.com/HouseTrip/ht-search_client)
+
 A gem client for the [HouseTrip property search service](https://github.com/HouseTrip/property_search).
 API documentation is available [here](http://docs.propertysearch.apiary.io/).
 
