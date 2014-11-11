@@ -4,6 +4,7 @@ A gem client for the [HouseTrip property search service](https://github.com/Hous
 API documentation is available [here](http://docs.propertysearch.apiary.io/).
 
 Table of contents:
+
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Exception Handling](#exception-handling)
@@ -103,7 +104,7 @@ Required parameters:
 
 #### PlaceStaySearch
 
-Search based on a `place_id`, given dates `from` and `to` 
+Search based on a `place_id`, given dates `from` and `to`
 
 Required parameters:
 ```
@@ -131,7 +132,7 @@ Required parameters:
 
 #### PointStaySearch
 
-Search based on `latitude`, `longitude` and a `radius`, given dates `from` and `to` 
+Search based on `latitude`, `longitude` and a `radius`, given dates `from` and `to`
 
 Required parameters:
 ```
@@ -185,8 +186,8 @@ All filters are optional. The filters you can apply are based on:
   - apartment
   - studio
   - boat
-  - castle 
-- `features [array]` 
+  - castle
+- `features [array]`
   - swimming pool
   - internet
   - washing machine
@@ -247,7 +248,7 @@ In order to facilitate testing this gem can mimick the responses you receive fro
 describe MyController do
 
   using Ht::SearchClient::Test
-  
+
   before do
     Ht::SearchClient::PlaceSearch
       .stub_request(place_id: 100)
@@ -255,7 +256,7 @@ describe MyController do
         { 'property_id' => 10 }
       ])
   end
-  
+
   it 'is blue & rainbows' do
     Ht::SearchClient::PlaceSearch.new(place_id: 100).perform
     # returns a PSS-like response with property_id = 10
@@ -265,11 +266,11 @@ end
 
 `stub_request` arguments accept the same parameters as property search service (check apiary documentation), for the specific search class. i.e - `PlaceSearch` requires a `place_id`, `PointSearch` requires a `latitude`, `longitude` and `radius`, etc.. This also stubs behind the scenes with Webmock the HTTP request.
 
-`with_results` allows you to mock the response returned. You can either pass an empty array **OR** the response might contain an array of hashes. The attributes that can be overriden are: 
+`with_results` allows you to mock the response returned. You can either pass an empty array **OR** the response might contain an array of hashes. The attributes that can be overriden are:
 
 For normal searches (`PlaceSearch`, `PointSearch` & `ViewportSearch`):
   - `property_id` (required)
-  - `average_price` (default: **100**) 
+  - `average_price` (default: **100**)
   - `distance` (default: **nil**)
 
 For stay searches (`PlaceStaySearch`, `PointStaySearch` & `ViewportStaySearch`):
