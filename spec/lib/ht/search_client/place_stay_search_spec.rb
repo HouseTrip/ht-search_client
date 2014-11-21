@@ -6,8 +6,8 @@ describe Ht::SearchClient::PlaceStaySearch do
       {
         foo: 'bar',
         place_id: 1234,
-        from: Date.parse('2014-10-10'),
-        to: Date.parse('2014-10-15')
+        from: '2014-10-10',
+        to: '2014-10-15'
       }
     end
 
@@ -36,6 +36,13 @@ describe Ht::SearchClient::PlaceStaySearch do
           expect { subject.perform }.to raise_error(KeyError)
         end
       end
+    end
+
+    context 'for different rate format' do
+      let(:from) { '10/10/2014' }
+      let(:to)   { '15/10/2014' }
+
+      it_should_behave_like 'request with correct date format'
     end
   end
 end

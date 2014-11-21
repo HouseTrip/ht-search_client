@@ -2,14 +2,16 @@ require 'spec_helper'
 
 describe Ht::SearchClient::ViewportStaySearch do
   describe '#perform' do
+    let(:from) { '2014-10-10' }
+    let(:to)   { '2014-10-15' }
     let(:options) do
       {
         bottom_left_lat: 52.33,
         bottom_left_lon: 13.08,
         top_right_lat: 52.67,
         top_right_lon: 13.76,
-        from: Date.parse('2014-10-10'),
-        to: Date.parse('2014-10-15')
+        from: from,
+        to: to
       }
     end
 
@@ -30,14 +32,23 @@ describe Ht::SearchClient::ViewportStaySearch do
 
     subject { described_class.new(options) }
 
-    it_should_behave_like 'a stay search' do
-      context 'when one of the required place search params is missing' do
-        before { options.delete(:bottom_left_lon) }
+    context 'with date in YYYY-MM-DD format' do
+      it_should_behave_like 'a stay search' do
+        context 'when one of the required place search params is missing' do
+          before { options.delete(:bottom_left_lon) }
 
-        it 'should raise error' do
-          expect { subject.perform }.to raise_error(KeyError)
+          it 'should raise error' do
+            expect { subject.perform }.to raise_error(KeyError)
+          end
         end
       end
+    end
+
+    context 'for different rate format' do
+      let(:from) { '10/10/2014' }
+      let(:to)   { '15/10/2014' }
+
+      it_should_behave_like 'request with correct date format'
     end
   end
 end

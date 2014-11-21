@@ -7,6 +7,7 @@ module Ht::SearchClient
   module StaySearch
     def search
       validate_date_params!
+      fix_date_format!
 
       super
     end
@@ -16,6 +17,13 @@ module Ht::SearchClient
     end
 
     private
+
+    def fix_date_format!
+      raw_params.merge!(
+        from: Date.parse(raw_params[:from]).to_s,
+        to: Date.parse(raw_params[:to]).to_s
+      )
+    end
 
     def allowed_params
       super + [:from, :to]
