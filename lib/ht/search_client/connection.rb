@@ -32,7 +32,7 @@ module Ht::SearchClient
         conn.request    :url_encoded
         conn.adapter    Faraday.default_adapter
         conn.basic_auth username, password
-        conn.options[:timeout] = 4
+        conn.options[:timeout] = 10
         conn.headers['Accept'] = "application/hal+json;v=#{API_VERSION}"
       end
     end
