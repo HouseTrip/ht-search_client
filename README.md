@@ -201,6 +201,12 @@ All filters are optional. The filters you can apply are based on:
 - `price_max [integer]`
 - `currency [string] [default: 'EUR']`
 
+### Aggregations
+
+All aggregations are optional. The aggregations you can apply are based on:
+- `aggregations` as a comma-separated string (e.g.: `type_of_property,garden`)
+- `range_aggregations` as an array of comma-separated strings (e.g.: `price,-100,100-200,200-`)
+
 Structure:
 
 ```ruby

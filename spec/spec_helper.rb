@@ -1,6 +1,8 @@
 require 'simplecov'
 SimpleCov.minimum_coverage 100
-SimpleCov.start
+SimpleCov.start do
+  add_filter 'vendor/'
+end
 
 require 'ht/search_client'
 require 'webmock/rspec'
