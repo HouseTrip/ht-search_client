@@ -9,7 +9,7 @@ module Ht::SearchClient
   class Remote
     ALLOWED_PARAMS = [
       :order, :per_page, :types, :features, :bedrooms, :page,
-      :guests, :price_min, :price_max, :currency
+      :guests, :price_min, :price_max, :currency, :aggregations, :range_aggregations
     ].freeze
 
     def initialize(raw_params = {})
