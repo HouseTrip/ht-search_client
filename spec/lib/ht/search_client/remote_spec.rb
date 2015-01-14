@@ -55,6 +55,36 @@ describe Ht::SearchClient::Remote do
         end
       end
 
+      context 'with unexpected params' do
+        let(:params) { { not_a_param: 'bad value' } }
+        let(:request_url) { 'http://username:password@test.com/foo?per_page=32&page=1&currency=EUR&order=sqs_score' }
+
+        it 'should add the parameters to the query' do
+          subject.perform
+          expect(stub_request :get, request_url).to have_been_requested
+        end
+      end
+
+      context 'with aggregation params' do
+        let(:params) { { aggregations: 'type_of_property,garden' } }
+        let(:request_url) { 'http://username:password@test.com/foo?aggregations=type_of_property,garden&per_page=32&page=1&currency=EUR&order=sqs_score' }
+
+        it 'should add the parameters to the query' do
+          subject.perform
+          expect(stub_request :get, request_url).to have_been_requested
+        end
+      end
+
+      context 'with range aggregation params' do
+        let(:params) { { range_aggregations: ['price,-25,25-'] } }
+        let(:request_url) { 'http://username:password@test.com/foo?range_aggregations[]=price,-25,25-&per_page=32&page=1&currency=EUR&order=sqs_score' }
+
+        it 'should add the parameters to the query' do
+          subject.perform
+          expect(stub_request :get, request_url).to have_been_requested
+        end
+      end
+
       context 'when currency is different' do
         let(:params)      { { currency: 'USD' } }
         let(:request_url) { 'http://username:password@test.com/foo?per_page=32&page=1&currency=USD&order=sqs_score' }
@@ -74,9 +104,10 @@ describe Ht::SearchClient::Remote do
             {'property_id' => 2, 'average_price' => 22.22, '_links' => { 'property' => 'internal_api_property_url_2' }},
             {'property_id' => 3, 'average_price' => 33.33, '_links' => { 'property' => 'internal_api_property_url_3' }}
           ],
+          'aggregations' => { 'price' => { '*-25.0' => 2, '25.0-*' => 1 } },
           'total' => 800,
           'page' => 2,
-          'per_page' => 3,
+          'per_page' => 3
         }
       end
 
@@ -105,6 +136,20 @@ describe Ht::SearchClient::Remote do
       describe '#page' do
         it 'returns the current page number' do
           expect(subject.page).to eql(2)
+        end
+      end
+
+      describe '#aggregations' do
+        it 'returns the correct buckets' do
+          expect(subject.aggregations).to eql( { 'price' => { '*-25.0' => 2, '25.0-*' => 1 } } )
+        end
+
+        context 'with no aggregations' do
+          let(:body) { { 'results' => [], 'total' => 800, 'page' => 2, 'per_page' => 3 } }
+
+          it 'returns no buckets' do
+            expect(subject.aggregations).to be_nil
+          end
         end
       end
     end

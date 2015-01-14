@@ -38,6 +38,10 @@ module Ht::SearchClient
       search.fetch 'page'
     end
 
+    def aggregations
+      search.fetch('aggregations') { nil }
+    end
+
     protected
 
     attr_reader :raw_params
