@@ -59,7 +59,7 @@ describe Ht::SearchClient::Remote do
         let(:params) { { not_a_param: 'bad value' } }
         let(:request_url) { 'http://username:password@test.com/foo?per_page=32&page=1&currency=EUR&order=sqs_score' }
 
-        it 'should add the parameters to the query' do
+        it 'should only add the default parameters to the query' do
           subject.perform
           expect(stub_request :get, request_url).to have_been_requested
         end
@@ -69,7 +69,7 @@ describe Ht::SearchClient::Remote do
         let(:params) { { aggregations: 'type_of_property,garden' } }
         let(:request_url) { 'http://username:password@test.com/foo?aggregations=type_of_property,garden&per_page=32&page=1&currency=EUR&order=sqs_score' }
 
-        it 'should add the parameters to the query' do
+        it 'should also add the aggregation parameters to the query' do
           subject.perform
           expect(stub_request :get, request_url).to have_been_requested
         end
@@ -79,7 +79,7 @@ describe Ht::SearchClient::Remote do
         let(:params) { { range_aggregations: ['price,-25,25-'] } }
         let(:request_url) { 'http://username:password@test.com/foo?range_aggregations[]=price,-25,25-&per_page=32&page=1&currency=EUR&order=sqs_score' }
 
-        it 'should add the parameters to the query' do
+        it 'should also add add the range aggregation parameters to the query' do
           subject.perform
           expect(stub_request :get, request_url).to have_been_requested
         end
