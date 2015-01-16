@@ -25,7 +25,7 @@ module Ht::SearchClient::Test
     #   to fail in consumers (if we really have to). This will give confidence
     #   on relying for this gem.
     #
-    def with_results(status: 200, properties: [], total: 0)
+    def with_results(status: 200, properties: [], total: properties.size)
       @webmock.to_return({
         status: status,
         body:   mocked_results(properties, total).to_json
