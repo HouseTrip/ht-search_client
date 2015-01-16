@@ -44,16 +44,19 @@ describe Ht::SearchClient::Test do
         before do
           Ht::SearchClient::PlaceSearch
            .stub_request(params)
-           .with_results(properties: [
-             { 'property_id' => 10, 'average_price' => 200, 'distance' => 20 }
-           ])
+           .with_results(
+             properties: [
+               { 'property_id' => 10, 'average_price' => 200, 'distance' => 20 }
+             ],
+             total: 40
+           )
         end
 
         it 'expects a specific overriden struture' do
           expect(subject).to eql({
             'page'     => 1,
             'per_page' => 32,
-            'total'    => 1,
+            'total'    => 40,
             'results'  => [
               {
                 'property_id'   => 10,
