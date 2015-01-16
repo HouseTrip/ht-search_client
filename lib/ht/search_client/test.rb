@@ -25,10 +25,10 @@ module Ht::SearchClient::Test
     #   to fail in consumers (if we really have to). This will give confidence
     #   on relying for this gem.
     #
-    def with_results(status: 200, properties: [])
+    def with_results(status: 200, properties: [], total: 0)
       @webmock.to_return({
         status: status,
-        body:   mocked_results(properties).to_json
+        body:   mocked_results(properties, total).to_json
       })
     end
 
@@ -38,11 +38,11 @@ module Ht::SearchClient::Test
       self.class.to_s =~ /Stay/
     end
 
-    def mocked_results(properties)
+    def mocked_results(properties, total)
       {
         page:     params.fetch(:page),
         per_page: params.fetch(:per_page),
-        total:    properties.length,
+        total:    total,
         results:  stay_class? ? mocked_stay_properties(properties) : mocked_properties(properties)
       }
     end

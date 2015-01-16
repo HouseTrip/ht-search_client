@@ -4,7 +4,7 @@ describe Ht::SearchClient::Test do
 
   context 'when dateless search' do
 
-    let(:params) { { place_id: 10 } }
+    let(:params) { { place_id: 10, page: 1, per_page: 1 } }
 
     it 'raises a webmock error' do
       expect { Ht::SearchClient::PlaceSearch.new(params).perform }.to raise_error(WebMock::NetConnectNotAllowedError)
@@ -20,9 +20,10 @@ describe Ht::SearchClient::Test do
         before do
           Ht::SearchClient::PlaceSearch
            .stub_request(params)
-           .with_results(properties: [
-             { 'property_id' => 10 }
-           ])
+           .with_results(
+             properties: [{ 'property_id' => 10 }],
+             total: 10
+           )
         end
 
         it 'does not raise a webmock error' do
@@ -32,8 +33,8 @@ describe Ht::SearchClient::Test do
         it 'expects a specific default struture' do
           expect(subject).to eql({
             'page'     => 1,
-            'per_page' => 32,
-            'total'    => 1,
+            'per_page' => 1,
+            'total'    => 10,
             'results'  => [
               { 'property_id' => 10, 'average_price' => 100 }
             ]})
@@ -44,16 +45,19 @@ describe Ht::SearchClient::Test do
         before do
           Ht::SearchClient::PlaceSearch
            .stub_request(params)
-           .with_results(properties: [
-             { 'property_id' => 10, 'average_price' => 200, 'distance' => 20 }
-           ])
+           .with_results(
+             properties: [
+               { 'property_id' => 10, 'average_price' => 200, 'distance' => 20 }
+             ],
+             total: 10
+           )
         end
 
         it 'expects a specific overriden struture' do
           expect(subject).to eql({
             'page'     => 1,
-            'per_page' => 32,
-            'total'    => 1,
+            'per_page' => 1,
+            'total' => 10,
             'results'  => [
               {
                 'property_id'   => 10,
@@ -75,7 +79,10 @@ describe Ht::SearchClient::Test do
       {
         place_id: 10,
         from:     '2024-10-20',
-        to:       '2024-10-25'
+        to:       '2024-10-25',
+        total: 10,
+        page: 1,
+        per_page: 1
       }
     end
 
@@ -93,16 +100,17 @@ describe Ht::SearchClient::Test do
         before do
           Ht::SearchClient::PlaceStaySearch
            .stub_request(params)
-           .with_results(properties: [
-             { 'property_id' => 10 }
-           ])
+           .with_results(
+             properties: [{ 'property_id' => 10 }],
+             total: 10
+           )
         end
 
         it 'expects a specific default struture' do
           expect(subject).to eql({
             'page'     => 1,
-            'per_page' => 32,
-            'total'    => 1,
+            'per_page' => 1,
+            'total'    => 10,
             'results'  => [
               {
                 'property_id'        => 10,
@@ -123,25 +131,28 @@ describe Ht::SearchClient::Test do
         before do
           Ht::SearchClient::PlaceStaySearch
            .stub_request(params)
-           .with_results(properties: [
-             {
-                'property_id'        => 10,
-                'stay_cost'          => 200.0,
-                'total_commission'   => 100.0,
-                'commission_tax'     => 0.0,
-                'commission'         => 300.0,
-                'days_cost'          => 800.0,
-                'extra_guest_price'  => 0.0,
-                'long_stay_discount' => 0.0
-             }
-           ])
+           .with_results(
+             properties: [
+               {
+                  'property_id'        => 10,
+                  'stay_cost'          => 200.0,
+                  'total_commission'   => 100.0,
+                  'commission_tax'     => 0.0,
+                  'commission'         => 300.0,
+                  'days_cost'          => 800.0,
+                  'extra_guest_price'  => 0.0,
+                  'long_stay_discount' => 0.0
+               }
+             ],
+             total: 10
+           )
         end
 
         it 'expects a an overriden struture' do
           expect(subject).to eql({
             'page'     => 1,
-            'per_page' => 32,
-            'total'    => 1,
+            'per_page' => 1,
+            'total'    => 10,
             'results'  => [
               {
                 'property_id'        => 10,
