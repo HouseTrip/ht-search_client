@@ -1,5 +1,5 @@
 module Ht
   module SearchClient
-    VERSION = '2.0'
+    VERSION = '1.9.1'
   end
 end
