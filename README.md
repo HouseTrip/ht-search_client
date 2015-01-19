@@ -276,7 +276,12 @@ end
 
 `stub_request` arguments accept the same parameters as property search service (check apiary documentation), for the specific search class. i.e - `PlaceSearch` requires a `place_id`, `PointSearch` requires a `latitude`, `longitude` and `radius`, etc.. This also stubs behind the scenes with Webmock the HTTP request.
 
-`with_results` allows you to mock the response returned. You can either pass an empty array **OR** the response might contain an array of hashes. The attributes that can be overriden are:
+`with_results` allows you to mock the response returned. It accepts:
+* an array of hashes representing the properties.
+* the total number number or results available.
+
+The total number of results is optional and defaults to the size of the properties array.
+The resulting properties are set with default attributes, however depending on the type of the search, they can be overriden.
 
 For normal searches (`PlaceSearch`, `PointSearch` & `ViewportSearch`):
   - `property_id` (required)
