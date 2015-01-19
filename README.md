@@ -280,8 +280,8 @@ end
 * an array of hashes representing the properties.
 * the total number number or results available.
 
-The total number of results is optional and default to the size of the properties array.
-The attributes of the properties use default values but you can override some of them depending on the type of search:
+The total number of results is optional and defaults to the size of the properties array.
+The resulting properties are set with default attributes, however depending on the type of the search, they can be overriden.
 
 For normal searches (`PlaceSearch`, `PointSearch` & `ViewportSearch`):
   - `property_id` (required)
