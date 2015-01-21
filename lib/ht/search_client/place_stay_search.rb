@@ -6,7 +6,7 @@ module Ht::SearchClient
   #
   # Parameters:
   #   Required:
-  #     - :id - id of a place (location, destination, )
+  #     - :place_id - id of a place (location, destination, )
   #     - :from - the check-in date
   #     - :to - the check-out date
   #   Optional:
