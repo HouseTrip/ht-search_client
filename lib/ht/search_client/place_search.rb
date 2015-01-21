@@ -6,7 +6,7 @@ module Ht::SearchClient
   #
   # Parameters:
   #   Required:
-  #     - :id - id of a place (location, destination, )
+  #     - :place_id - id of a place (location, destination, )
   #   Optional:
   #     - :order - order by
   #     - :per_page - max number of properties in response
