@@ -200,6 +200,7 @@ All filters are optional. The filters you can apply are based on:
 - `price_min [integer]`
 - `price_max [integer]`
 - `currency [string] [default: 'EUR']`
+- `excluding_ids [array]`
 
 ### Aggregations
 

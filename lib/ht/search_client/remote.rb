@@ -8,17 +8,20 @@ module Ht::SearchClient
   #
   class Remote
     ALLOWED_PARAMS = [
-      :order, :per_page, :types, :features, :bedrooms, :page,
-      :guests, :price_min, :price_max, :currency, :aggregations, :range_aggregations
+      :order, :per_page, :types, :features,
+      :bedrooms, :page, :guests, :price_min,
+      :price_max, :currency, :aggregations, :range_aggregations,
+      :excluding_ids
     ].freeze
 
     def initialize(raw_params = {})
-      @raw_params = raw_params
+      @raw_params = raw_params.tap do |params|
+        params[:excluding_ids] = params[:excluding_ids].join(',') if params.has_key?(:excluding_ids)
+      end
     end
 
     def perform
       return search unless block_given?
-
       yield search
     end
 
