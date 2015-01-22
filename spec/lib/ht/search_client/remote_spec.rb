@@ -106,6 +106,20 @@ describe Ht::SearchClient::Remote do
       end
     end
 
+    describe 'params' do
+
+      let(:params) { { page: 1, foo: :bar } }
+      let(:body)   { { 'results' => [] } }
+
+      it 'returns the accepted params' do
+        expect(subject.params).to have_key(:page)
+      end
+
+      it 'does not return disallowed params' do
+        expect(subject.params).to_not have_key(:foo)
+      end
+    end
+
     describe 'result attributes accessors' do
       let(:body) do
         {

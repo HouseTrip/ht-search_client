@@ -45,6 +45,10 @@ module Ht::SearchClient
       search.fetch('aggregations') { nil }
     end
 
+    def params
+      @params ||= default_options.merge(search_options).freeze
+    end
+
     protected
 
     attr_reader :raw_params
@@ -62,11 +66,6 @@ module Ht::SearchClient
       }
     end
 
-    def params
-      default_options.merge(
-        search_options
-      )
-    end
 
     # NOTE: Developer Sanity announcement this method is
     # being overriden by StaySearch
