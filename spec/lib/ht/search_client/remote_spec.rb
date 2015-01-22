@@ -85,6 +85,16 @@ describe Ht::SearchClient::Remote do
         end
       end
 
+      context 'with excluding ids' do
+        let(:params)      { { excluding_ids: [10, 40, 50] } }
+        let(:request_url) { 'http://username:password@test.com/foo?excluding_ids=10,40,50&per_page=32&page=1&currency=EUR&order=sqs_score' }
+
+        it 'adds the ids to the request url' do
+          subject.perform
+          expect(stub_request :get, request_url).to have_been_requested
+        end
+      end
+
       context 'when currency is different' do
         let(:params)      { { currency: 'USD' } }
         let(:request_url) { 'http://username:password@test.com/foo?per_page=32&page=1&currency=USD&order=sqs_score' }
