@@ -6,7 +6,7 @@ module Ht::SearchClient
   #
   # Parameters:
   #   Required:
-  #     - :property_ids - ids of properties to be checked, comma separated
+  #     - :property_ids - ids of properties to be checked, in an array
   #     - :from - the check-in date
   #     - :to - the check-out date
   #   Optional:
@@ -61,24 +61,22 @@ module Ht::SearchClient
   class PropertyIdsStaySearch < Remote
     include StaySearch
 
-    def search
-      validate_property_ids_params!
-
-      super
-    end
-
     private
 
     def endpoint
       'properties/stays'
     end
 
+    def search_options
+      super.merge(property_ids: property_ids)
+    end
+
     def allowed_params
       super + [:property_ids, :from, :to]
     end
 
-    def validate_property_ids_params!
-      raise KeyError, 'missing :property_ids' unless raw_params.has_key?(:property_ids)
+    def property_ids
+      raw_params.fetch(:property_ids).join(',')
     end
 
   end
