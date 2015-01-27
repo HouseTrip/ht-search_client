@@ -1,6 +1,6 @@
 module Ht::SearchClient
   #
-  # GET /places/:id/stays?from=:from&to=:to
+  # GET /properties/stays?from=:from&to=:to&property_ids=:property_ids
   #
   # For a given place and dates, return matching stays
   #
@@ -54,7 +54,7 @@ module Ht::SearchClient
   #
   # Usage:
   #   Instantiate a search with:
-  #     - Ht::SearchClient::PlaceStaySearch.new({})
+  #     - Ht::SearchClient::PropertyIdsStaySearch.new({})
   #   then call #perform on the newly created object
   #   The #perform method is defined in the Remote class
   #
