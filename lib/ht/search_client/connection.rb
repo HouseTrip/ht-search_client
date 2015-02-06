@@ -9,15 +9,23 @@ module Ht::SearchClient
     class UnknownServerError < StandardError; end
 
     def get(path, params)
-      monitor.notify('attempts')
+      fetch(path, params, :get)
+    end
 
-      with_error_handling(path, params) do
-        @response = client.get(path, params)
-        assert_valid_response
-      end
+    def post(path, params)
+      fetch(path, params, :post)
     end
 
     private
+
+    def fetch(path, params, method)
+      monitor.notify('attempts')
+
+      with_error_handling(path, params) do
+        @response = client.public_send(method, path, params)
+        assert_valid_response
+      end
+    end
 
     def monitor
       Ht::SearchClient.monitor
