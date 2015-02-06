@@ -4,11 +4,20 @@ module Ht::SearchClient::Test
     def stub_request(params = {})
       new(params).stub_request
     end
+
+    def stub_post_request(params = {})
+      new(params).stub_post_request
+    end
   end
 
   refine Ht::SearchClient::Remote do
     def stub_request
       @webmock = Ht::SearchClient::Connection.stub_request(endpoint, params)
+      self
+    end
+
+    def stub_post_request
+      @webmock = Ht::SearchClient::Connection.stub_post_request(endpoint, params)
       self
     end
 
@@ -79,6 +88,10 @@ module Ht::SearchClient::Test
     def stub_request(*args)
       new.stub_request(*args)
     end
+
+    def stub_post_request(*args)
+      new.stub_post_request(*args)
+    end
   end
 
   refine Ht::SearchClient::Connection do
@@ -88,6 +101,14 @@ module Ht::SearchClient::Test
       service_uri.password = password
 
       WebMock.stub_request(:get, service_uri.to_s)
+    end
+
+    def stub_post_request(endpoint, params)
+      service_uri          = client.build_url(endpoint)
+      service_uri.user     = username
+      service_uri.password = password
+
+      WebMock.stub_request(:post, service_uri.to_s).with(params)
     end
   end
 

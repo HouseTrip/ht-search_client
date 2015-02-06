@@ -10,7 +10,7 @@ describe Ht::SearchClient::PropertyIdsStaySearch do
   describe '#perform' do
     before do
       Ht::SearchClient::PropertyIdsStaySearch
-        .stub_request(options)
+        .stub_post_request(options)
         .with_results(properties: [
           { 'property_id' => 121, 'average_price' => 121.21 },
           { 'property_id' => 122, 'average_price' => 321.09 }
