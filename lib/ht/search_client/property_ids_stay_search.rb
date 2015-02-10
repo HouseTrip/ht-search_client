@@ -1,12 +1,20 @@
 module Ht::SearchClient
   #
-  # GET /properties/stays?from=:from&to=:to&property_ids=:property_ids
+  # POST /properties/stays
+  # POST body
+  #   {
+  #     from: '2050-01-01',
+  #     to: '2050-01-01',
+  #     property_ids: '1,2,3,4',
+  #     order: 'sqs_score',
+  #     etc.
+  #   }
   #
   # For a given place and dates, return matching stays
   #
   # Parameters:
   #   Required:
-  #     - :property_ids - ids of properties to be checked, in an array
+  #     - :property_ids - array of properties ids
   #     - :from - the check-in date
   #     - :to - the check-out date
   #   Optional:
@@ -72,12 +80,19 @@ module Ht::SearchClient
     end
 
     def allowed_params
-      super + [:property_ids, :from, :to]
+      super + [:property_ids]
     end
 
     def property_ids
       raw_params.fetch(:property_ids).join(',')
     end
 
+    # this endpoint requires a POST request
+    def search
+      validate_date_params!
+      fix_date_format!
+
+      @search ||= connection.post(endpoint, params)
+    end
   end
 end

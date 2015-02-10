@@ -3,14 +3,23 @@ require 'spec_helper'
 describe Ht::SearchClient::PropertyIdsStaySearch do
   using Ht::SearchClient::Test
 
-  let(:options) { { property_ids: [121, 122], from: '2020-08-15', to: '2020-08-20' } }
+  let(:options) {
+    {
+      property_ids: [121, 122],
+      from: '2020-08-15',
+      to: '2020-08-20',
+      per_page: '32',
+      page: '1'
+    }
+  }
+
   subject       { described_class.new(options) }
   let(:results) { subject.perform; subject.results }
 
   describe '#perform' do
     before do
       Ht::SearchClient::PropertyIdsStaySearch
-        .stub_request(options)
+        .stub_request(options, :post)
         .with_results(properties: [
           { 'property_id' => 121, 'average_price' => 121.21 },
           { 'property_id' => 122, 'average_price' => 321.09 }
@@ -51,6 +60,5 @@ describe Ht::SearchClient::PropertyIdsStaySearch do
       options.delete(:from)
       expect { subject.perform }.to raise_error(KeyError)
     end
-
   end
 end
