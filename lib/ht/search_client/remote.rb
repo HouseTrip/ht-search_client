@@ -49,6 +49,10 @@ module Ht::SearchClient
       @params ||= default_options.merge(search_options).freeze
     end
 
+    def method
+      :get
+    end
+
     protected
 
     attr_reader :raw_params

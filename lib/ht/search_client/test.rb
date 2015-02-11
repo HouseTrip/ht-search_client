@@ -1,14 +1,14 @@
 module Ht::SearchClient::Test
 
   refine Ht::SearchClient::Remote.singleton_class do
-    def stub_request(params = {}, method = :get)
-      new(params).stub_request(method)
+    def stub_request(params = {})
+      new(params).stub_request
     end
   end
 
   refine Ht::SearchClient::Remote do
-    def stub_request(method)
-      @webmock = Ht::SearchClient::Connection.stub_request(endpoint, params, method)
+    def stub_request
+      @webmock = Ht::SearchClient::Connection.stub_request(endpoint, params, self.method)
       self
     end
 

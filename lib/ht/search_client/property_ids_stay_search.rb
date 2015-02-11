@@ -69,6 +69,10 @@ module Ht::SearchClient
   class PropertyIdsStaySearch < Remote
     include StaySearch
 
+    def method
+      :post
+    end
+
     private
 
     def endpoint
