@@ -90,13 +90,5 @@ module Ht::SearchClient
     def property_ids
       raw_params.fetch(:property_ids).join(',')
     end
-
-    # this endpoint requires a POST request
-    def search
-      validate_date_params!
-      fix_date_format!
-
-      @search ||= connection.post(endpoint, params)
-    end
   end
 end

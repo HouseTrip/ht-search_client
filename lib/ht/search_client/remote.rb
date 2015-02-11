@@ -58,7 +58,7 @@ module Ht::SearchClient
     attr_reader :raw_params
 
     def search
-      @search ||= connection.get(endpoint, params)
+      @search ||= connection.public_send(method, endpoint, params)
     end
 
     def default_options
