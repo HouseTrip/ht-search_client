@@ -11,7 +11,7 @@ module Ht::SearchClient
       :order, :per_page, :types, :features,
       :bedrooms, :page, :guests, :price_min,
       :price_max, :currency, :aggregations, :range_aggregations,
-      :excluding_ids
+      :excluding_ids, :random, :random_order_seed
     ].freeze
 
     def initialize(raw_params = {})
