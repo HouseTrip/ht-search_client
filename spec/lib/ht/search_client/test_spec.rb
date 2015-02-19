@@ -31,8 +31,8 @@ describe Ht::SearchClient::Test do
 
         it 'expects a specific default struture' do
           expect(subject).to eql({
-            'page'     => 1,
-            'per_page' => 32,
+            'page'     => '1',
+            'per_page' => '32',
             'total'    => 1,
             'results'  => [
               { 'property_id' => 10, 'average_price' => 100 }
@@ -54,8 +54,8 @@ describe Ht::SearchClient::Test do
 
         it 'expects a specific overriden struture' do
           expect(subject).to eql({
-            'page'     => 1,
-            'per_page' => 32,
+            'page'     => '1',
+            'per_page' => '32',
             'total'    => 40,
             'results'  => [
               {
@@ -103,8 +103,8 @@ describe Ht::SearchClient::Test do
 
         it 'expects a specific default struture' do
           expect(subject).to eql({
-            'page'     => 1,
-            'per_page' => 32,
+            'page'     => '1',
+            'per_page' => '32',
             'total'    => 1,
             'results'  => [
               {
@@ -142,8 +142,8 @@ describe Ht::SearchClient::Test do
 
         it 'expects a an overriden struture' do
           expect(subject).to eql({
-            'page'     => 1,
-            'per_page' => 32,
+            'page'     => '1',
+            'per_page' => '32',
             'total'    => 1,
             'results'  => [
               {
