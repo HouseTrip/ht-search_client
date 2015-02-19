@@ -63,8 +63,8 @@ module Ht::SearchClient
 
     def default_options
       {
-        per_page: 32,
-        page:     1,
+        per_page: '32',
+        page:     '1',
         currency: 'EUR',
         order:    'sqs_score'
       }
