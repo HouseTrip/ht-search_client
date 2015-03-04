@@ -4,21 +4,6 @@ describe Ht::SearchClient::Connection do
   let(:request_url) { 'http://username:password@test.com/foo' }
   let(:monitor) { Ht::SearchClient.monitor }
 
-  describe '#post' do
-    let(:perform) { subject.post(request_url, {}) }
-
-    context 'the request is successful' do
-      before do
-        stub_request(:post, request_url).
-          to_return(status: 200, body: { results: [1, 2, 3] }.to_json, headers: {})
-      end
-
-      it 'should perform a post request' do
-        expect(perform).to have_requested(:post, request_url)
-      end
-    end
-  end
-
   describe '#get' do
     let(:perform) { subject.get(request_url, {}) }
 

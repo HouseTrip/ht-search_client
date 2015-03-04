@@ -1,20 +1,12 @@
 module Ht::SearchClient
   #
-  # POST /properties/stays
-  # POST body
-  #   {
-  #     from: '2050-01-01',
-  #     to: '2050-01-01',
-  #     property_ids: '1,2,3,4',
-  #     order: 'sqs_score',
-  #     etc.
-  #   }
+  # GET /properties/stays?from=:from&to=:to&property_ids=:property_ids
   #
   # For a given place and dates, return matching stays
   #
   # Parameters:
   #   Required:
-  #     - :property_ids - array of properties ids
+  #     - :property_ids - array of property ids
   #     - :from - the check-in date
   #     - :to - the check-out date
   #   Optional:
@@ -68,10 +60,6 @@ module Ht::SearchClient
   #
   class PropertyIdsStaySearch < Remote
     include StaySearch
-
-    def method
-      :post
-    end
 
     private
 
