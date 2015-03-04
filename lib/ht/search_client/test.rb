@@ -8,7 +8,7 @@ module Ht::SearchClient::Test
 
   refine Ht::SearchClient::Remote do
     def stub_request
-      @webmock = Ht::SearchClient::Connection.stub_request(endpoint, params, self.method)
+      @webmock = Ht::SearchClient::Connection.stub_request(endpoint, params)
       self
     end
 
@@ -82,19 +82,12 @@ module Ht::SearchClient::Test
   end
 
   refine Ht::SearchClient::Connection do
-    def stub_request(endpoint, params, method = :get)
-      stubbed_params = if method == :get
-        { query: params }
-      else
-        { body: params }
-      end
-
+    def stub_request(endpoint, params)
       service_uri          = client.build_url(endpoint)
       service_uri.user     = username
       service_uri.password = password
 
-      WebMock.stub_request(method, service_uri).with(stubbed_params)
+      WebMock.stub_request(:get, service_uri).with(query: params)
     end
   end
-
 end
